@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Escute sem tentar consertar</title>
+  <desc id="desc">Arte educativa sobre escuta respeitosa e acolhimento.</desc>
+  <rect width="1080" height="1080" fill="#F8E8DC"/>
+  <circle cx="910" cy="170" r="170" fill="#C45D42"/>
+  <circle cx="910" cy="170" r="96" fill="#F1B45B"/>
+  <path d="M140 195h800v570H140z" rx="36" fill="#FFFFFF"/>
+  <text x="196" y="282" fill="#C45D42" font-family="Arial,sans-serif" font-size="26" font-weight="700" letter-spacing="3">UMA PRESENÇA IMPORTA</text>
+  <text x="196" y="405" fill="#173F3B" font-family="Arial,sans-serif" font-size="67" font-weight="700">
+    <tspan x="196" dy="0">Escute sem</tspan>
+    <tspan x="196" dy="82">tentar consertar.</tspan>
+  </text>
+  <text x="196" y="585" fill="#405651" font-family="Arial,sans-serif" font-size="30">
+    <tspan x="196" dy="0">Pergunte, acolha e respeite o tempo</tspan>
+    <tspan x="196" dy="43">de quem está passando por algo difícil.</tspan>
+  </text>
+  <path d="M196 683h158" stroke="#10A28A" stroke-width="10" stroke-linecap="round"/>
+  <text x="88" y="870" fill="#173F3B" font-family="Arial,sans-serif" font-size="28" font-weight="700">Precisa conversar? CVV 188 • Gratuito, 24h</text>
+  <text x="88" y="930" fill="#405651" font-family="Arial,sans-serif" font-size="23">Em risco imediato, procure atendimento ou ligue 192 (SAMU).</text>
+  <text x="540" y="1010" text-anchor="middle" fill="#718079" font-family="Arial,sans-serif" font-size="20">ACOLHER &amp; OUVIR • Material educativo</text>
+</svg>

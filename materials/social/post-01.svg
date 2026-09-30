@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Você não precisa passar por tudo sozinho</title>
+  <desc id="desc">Arte de acolhimento com os contatos CVV 188 e SAMU 192.</desc>
+  <rect width="1080" height="1080" fill="#F3F6F1"/>
+  <path d="M0 0h1080v590H0z" fill="#173F3B"/>
+  <circle cx="892" cy="170" r="92" fill="#F1B45B"/>
+  <path d="M850 170h84M892 128v84" stroke="#173F3B" stroke-width="12" stroke-linecap="round"/>
+  <text x="88" y="108" fill="#DDE9E2" font-family="Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="4">ACOLHER &amp; OUVIR</text>
+  <text x="88" y="280" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="72" font-weight="700">
+    <tspan x="88" dy="0">Você não precisa</tspan>
+    <tspan x="88" dy="88">passar por tudo</tspan>
+    <tspan x="88" dy="88">sozinho.</tspan>
+  </text>
+  <text x="88" y="550" fill="#DDE9E2" font-family="Arial,sans-serif" font-size="30">Falar com alguém de confiança pode ser um primeiro passo.</text>
+  <rect x="88" y="670" width="904" height="190" rx="28" fill="#FFFFFF"/>
+  <text x="540" y="754" text-anchor="middle" fill="#173F3B" font-family="Arial,sans-serif" font-size="58" font-weight="700">CVV 188</text>
+  <text x="540" y="810" text-anchor="middle" fill="#405651" font-family="Arial,sans-serif" font-size="28">Apoio emocional gratuito, 24 horas.</text>
+  <text x="540" y="930" text-anchor="middle" fill="#405651" font-family="Arial,sans-serif" font-size="23">Em risco imediato, ligue 192 (SAMU).</text>
+  <text x="540" y="1012" text-anchor="middle" fill="#718079" font-family="Arial,sans-serif" font-size="20">Material educativo • Não substitui atendimento profissional</text>
+</svg>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acolher & Ouvir | Prevenção e Apoio à Saúde Emocional</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Arquivo CSS Externo -->
+    <link rel="stylesheet" href="tela.css">
+</head>
+<body>
+
+    <!-- Header / NAVEGAÇÃO -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="#home" class="logo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                </svg>
+                <span>Acolher<b>&Ouvir</b></span>
+            </a>
+            <nav aria-label="Navegação principal">
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" class="nav-link active">Início</a></li>
+                    <li><a href="#ajuda" class="nav-link">Preciso de Ajuda</a></li>
+                    <li><a href="#sinais" class="nav-link">Sinais & Guias</a></li>
+                    <li><a href="#comunidade" class="nav-link">Histórias & Mural</a></li>
+                    <li><a href="#materiais" class="nav-link">Materiais</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-controls="navMenu" aria-expanded="false">Menu</button>
+            <div class="header-cta">
+                <a href="tel:188" class="btn btn-emergency btn-sm">
+                    ⚡ Ligue 188 (CVV)
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- BANNER PRINCIPAL (HERO) -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">Atendimento Gratuito, Anônimo e 24h</span>
+                <h1 class="hero-title">Você não precisa passar por isso <span>sozinho</span>.</h1>
+                <p class="hero-subtitle">
+                    Falar é o primeiro passo para encontrar paz e clareza. Estamos aqui para acolher sua dor sem julgamentos, a qualquer hora do dia ou da noite.
+                </p>
+                <div class="hero-actions">
+                    <a href="#ajuda" class="btn btn-primary">Buscar Apoio Agora</a>
+                    <a href="tel:188" class="btn btn-emergency">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        Ligar 188 (CVV)
+                    </a>
+                </div>
+
+                <div class="hero-cards-grid">
+                    <div class="hero-card" data-scroll-target="sinais">
+                        <div class="hero-card-icon">🔍</div>
+                        <div>
+                            <h4>Sinais de Alerta</h4>
+                            <p>Aprenda a reconhecer quando você ou alguém precisa de apoio.</p>
+                        </div>
+                    </div>
+                    <div class="hero-card" data-scroll-target="sinais">
+                        <div class="hero-card-icon">🤝</div>
+                        <div>
+                            <h4>Como Ajudar</h4>
+                            <p>Guias práticos sobre o que dizer e como acolher um amigo.</p>
+                        </div>
+                    </div>
+                    <div class="hero-card" data-scroll-target="ajuda">
+                        <div class="hero-card-icon">📍</div>
+                        <div>
+                            <h4>Apoio Público</h4>
+                            <p>Encontre postos do CAPS e UBS mais próximos de você.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TELA "PRECISO DE AJUDA" -->
+    <section id="ajuda" class="section bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Central de Apoio Imediato</h2>
+                <p>Se você está em crise, sentindo dor emocional intensa ou apenas precisa conversar, use uma das opções gratuitas abaixo.</p>
+            </div>
+
+            <!-- Card Principal CVV -->
+            <div class="cvv-banner">
+                <div class="cvv-info">
+                    <span class="badge badge-emergency">Emergência 24 Horas</span>
+                    <h3>CVV - Centro de Valorização da Vida</h3>
+                    <p>Atendimento telefônico e via chat totalmente <strong>gratuito, sigiloso e anônimo</strong>. Voluntários prontos para ouvir você sem julgamentos.</p>
+                    <div class="cvv-meta">
+                        <span>🔒 Sigilo Total Garantido</span>
+                        <span>⏱️ Atendimento 24/7</span>
+                        <span>📞 Ligação Gratuita de qualquer telefone</span>
+                    </div>
+                </div>
+                <div class="cvv-actions">
+                    <a href="tel:188" class="btn btn-emergency btn-lg">
+                        📞 Ligar para 188
+                    </a>
+                    <button class="btn btn-outline" data-action="toggle-chat">
+                        💬 Abrir Chat de Apoio
+                    </button>
+                </div>
+            </div>
+
+            <!-- Simulador de Chat Interativo -->
+            <div id="chatSimulator" class="chat-sim-container" style="display: none;">
+                <div class="chat-sim-header">
+                    <div>
+                        <strong>Assistente virtual de acolhimento</strong>
+                        <br><small style="color: var(--text-light)">Não substitui atendimento psicológico nem o CVV.</small>
+                    </div>
+                    <button type="button" data-action="toggle-chat" style="background:none; border:none; color:white; cursor:pointer; font-size:1.2rem;">✕</button>
+                </div>
+                <div class="chat-sim-messages" id="chatMessages">
+                    <div class="message msg-bot">
+                        Olá. Seja bem-vindo(a) ao canal de acolhimento. Estou aqui para te ouvir. Como você está se sentindo hoje?
+                    </div>
+                </div>
+                <div class="chat-sim-input">
+                    <input type="text" id="chatInput" placeholder="Digite sua mensagem aqui...">
+                    <button class="btn btn-primary btn-sm" data-action="send-chat">Enviar</button>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <!-- Exercício de Respiração Guiada -->
+                <div class="card">
+                    <span class="card-tag">Autocuidado Para Crise</span>
+                    <h3 class="card-title">Exercício de Respiração Guiada</h3>
+                    <p class="card-desc">Quando a ansiedade ou angústia aumenta, focar na respiração ajuda a desacelerar o ritmo cardíaco e restabelecer a calma.</p>
+
+                    <div class="breathing-widget">
+                        <div class="breathing-circle-wrap">
+                            <div class="breathing-circle" id="breathCircle"></div>
+                            <span class="breathing-text" id="breathText">Pronto?</span>
+                        </div>
+                        <div style="text-align: center;">
+                            <button class="btn btn-primary" id="breathBtn" data-action="toggle-breathing">Iniciar Respiração (4-4-4)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Busca de Postos Públicos (CAPS/UBS) -->
+                <div class="card">
+                    <span class="card-tag">Recursos Públicos do SUS</span>
+                    <h3 class="card-title">Encontre Atendimento Gratuito</h3>
+                    <p class="card-desc">Digite seu CEP ou cidade para localizar Centros de Atenção Psicossocial (CAPS) e Unidades Básicas de Saúde (UBS).</p>
+
+                    <div class="search-box">
+                        <input type="text" id="cepInput" placeholder="Digite seu CEP ou Cidade (Ex: 01001-000)">
+                        <button class="btn btn-primary" data-action="search-units">Buscar</button>
+                    </div>
+
+                    <div class="map-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:8px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <span>Mapa Interativo de Unidades de Saúde</span>
+                    </div>
+
+                    <div class="units-list" id="unitsList">
+                        Digite seu CEP ou cidade para localizar unidades.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TELA "SINAIS DE ALERTA E COMO AJUDAR" -->
+    <section id="sinais" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Sinais de Alerta & Como Ajudar</h2>
+                <p>Informações práticas para identificar quando algo não vai bem e saber exatamente como agir de forma segura e empática.</p>
+            </div>
+
+            <!-- Abas Alternadoras -->
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-action="switch-tab" data-tab-id="tab-mim">
+                    🙋‍♂️ Para Mim (Reconhecendo Sinais)
+                </button>
+                <button class="tab-btn" data-action="switch-tab" data-tab-id="tab-outro">
+                    🤝 Para Ajudar Alguém (Guia Prático)
+                </button>
+            </div>
+
+            <!-- Conteúdo Aba 1: Para Mim -->
+            <div id="tab-mim" class="tab-content active">
+                <div class="grid grid-3">
+                    <div class="card">
+                        <div style="font-size: 2rem; margin-bottom: 12px;">🧠</div>
+                        <h4 class="card-title">Sentimentos e Pensamentos</h4>
+                        <ul class="check-list">
+                            <li>Sensação de tristeza profunda e constante</li>
+                            <li>Sensação de desesperança ou falta de futuro</li>
+                            <li>Pensamentos frequentes de "querer sumir"</li>
+                            <li>Ansiedade ou angústia no peito incontrolável</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div style="font-size: 2rem; margin-bottom: 12px;">🔋</div>
+                        <h4 class="card-title">Mudanças de Comportamento</h4>
+                        <ul class="check-list">
+                            <li>Isolamento de amigos e familiares</li>
+                            <li>Perda de interesse em atividades que amava</li>
+                            <li>Alterações drásticas no sono (insônia/excesso)</li>
+                            <li>Aumento no consumo de álcool ou remédios</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div style="font-size: 2rem; margin-bottom: 12px;">⚠️</div>
+                        <h4 class="card-title">Sinais de Crise Grave</h4>
+                        <ul class="check-list">
+                            <li>Despedidas não habituais de pessoas queridas</li>
+                            <li>Doar pertences de grande valor sentimental</li>
+                            <li>Pesquisas ou planos de autodestruição</li>
+                            <li>Falta de apetite acentuada e descuido pessoal</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conteúdo Aba 2: Para Ajudar o Outro -->
+            <div id="tab-outro" class="tab-content">
+                <h3 style="margin-bottom: 24px; text-align: center;">Comparativo: O que dizer vs. O que evitar</h3>
+                <div class="grid grid-2">
+                    <div class="card" style="border-top: 4px solid var(--secondary)">
+                        <h4 class="card-title" style="color: var(--secondary)">✅ O que Dizer (Postura Acolhedora)</h4>
+                        <div class="dos-donts-list">
+                            <div class="do-item">
+                                <strong>"Estou aqui com você. Você não precisa passar por isso sozinho."</strong>
+                                <p>Demonstra presença real e reduz a sensação de isolamento.</p>
+                            </div>
+                            <div class="do-item">
+                                <strong>"Quer conversar sobre o que está sentindo? Posso apenas te ouvir."</strong>
+                                <p>Abre espaço sem pressionar por soluções imediatas.</p>
+                            </div>
+                            <div class="do-item">
+                                <strong>"Sua dor é real e importa. Como posso te apoiar agora?"</strong>
+                                <p>Valida o sentimento sem diminuir o sofrimento.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="border-top: 4px solid var(--emergency)">
+                        <h4 class="card-title" style="color: var(--emergency)">❌ O que EVITAR Dizer (Frases Nocivas)</h4>
+                        <div class="dos-donts-list">
+                            <div class="dont-item">
+                                <strong>"Isso é frescura / falta de Deus / falta do que fazer."</strong>
+                                <p>Julga e invalida o sofrimento psíquico, aumentando a culpa.</p>
+                            </div>
+                            <div class="dont-item">
+                                <strong>"Pense que tem pessoas em situação pior que a sua."</strong>
+                                <p>Minimiza a dor do outro e impede que ele se abra.</p>
+                            </div>
+                            <div class="dont-item">
+                                <strong>"Reaja! Amanhã você vai acordar bom."</strong>
+                                <p>Cria expectativas irreais para quem está enfrentando depressão grave.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mitos e Verdades (Accordion) -->
+            <div style="margin-top: 48px;">
+                <h3 style="text-align: center; margin-bottom: 24px;">Mitos e Verdades sobre Saúde Mental</h3>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" type="button" data-action="toggle-accordion" aria-expanded="false">
+                            <strong>Mito ou Verdade: "Falar sobre suicídio pode incentivar a pessoa a cometê-lo?"</strong>
+                            <span>+</span>
+                        </button>
+                        <div class="accordion-body">
+                            <p><strong>É MITO!</strong> Falar de forma responsável e acolhedora sobre o assunto não estimula o ato. Pelo contrário: dá à pessoa a oportunidade de expressar sua dor e buscar ajuda especializada antes que seja tarde.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" type="button" data-action="toggle-accordion" aria-expanded="false">
+                            <strong>Mito ou Verdade: "Quem avisa que vai se machucar está só querendo chamar atenção?"</strong>
+                            <span>+</span>
+                        </button>
+                        <div class="accordion-body">
+                            <p><strong>É MITO!</strong> A grande maioria das pessoas que tentam tirar a própria vida dá sinais prévios de sofrimento. Todo pedido de ajuda ou sinal de desespero deve ser levado a sério.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" type="button" data-action="toggle-accordion" aria-expanded="false">
+                            <strong>Mito ou Verdade: "Depressão e ansiedade têm tratamento e cura/controle?"</strong>
+                            <span>+</span>
+                        </button>
+                        <div class="accordion-body">
+                            <p><strong>É VERDADE!</strong> Com acompanhamento psicológico, psiquiátrico e apoio social, a grande maioria das pessoas recupera a qualidade de vida e supera momentos de crise.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TELA "HISTÓRIAS E DEPOIMENTOS" -->
+    <section id="comunidade" class="section bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Histórias & Mural Comunitário</h2>
+                <p>Veja relatos reais de superação e deixe uma mensagem anônima de incentivo para acolher alguém que precisa.</p>
+            </div>
+
+            <!-- Galeria de Histórias -->
+            <h3 style="margin-bottom: 20px;">Relatos de Superação</h3>
+            <div class="grid grid-3" style="margin-bottom: 48px;">
+                <div class="card">
+                    <span class="card-tag">Depoimento • Mariana, 28 anos</span>
+                    <h4 class="card-title">"Descobri que pedir ajuda não é sinal de fraqueza."</h4>
+                    <p class="card-desc">"Durante a faculdade, cheguei a um ponto em que não conseguia sair da cama. Ligar para o 188 no meio da noite foi o ponto de virada para buscar o CAPS do meu bairro."</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-tag">Depoimento • Carlos, 42 anos</span>
+                    <h4 class="card-title">"O apoio da minha família salvou minha vida."</h4>
+                    <p class="card-desc">"Quando meu irmão percebeu meu isolamento e apenas se sentou ao meu lado sem me julgar, entendi que não estava sozinho. O tratamento mudou minha história."</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-tag">Depoimento • Lucas, 19 anos</span>
+                    <h4 class="card-title">"A ansiedade não define quem eu sou."</h4>
+                    <p class="card-desc">"Os exercícios de respiração e a terapia comunitária me ensinaram a lidar com as crises de pânico. Hoje ajudo outros jovens no meu bairro."</p>
+                </div>
+            </div>
+
+            <!-- Mural Interativo de Mensagens -->
+            <div class="card">
+                <h3 class="card-title">Mural de Mensagens Positivas</h3>
+                <p class="card-desc">Escreva uma palavra de carinho, esperança ou incentivo. As mensagens são totalmente anônimas.</p>
+
+                <div class="wall-form">
+                    <textarea id="wallMessageInput" placeholder="Escreva uma mensagem de esperança e acolhimento para alguém que está lendo..." maxlength="250"></textarea>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small style="color: var(--text-light)">Sua mensagem será publicada anonimamente.</small>
+                        <button class="btn btn-primary" data-action="publish-message">Publicar no Mural</button>
+                    </div>
+                </div>
+
+                <div class="wall-grid" id="wallGrid">
+                    <!-- Mensagens do Mural injetadas dinamicamente -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TELA "MATERIAIS E DOWNLOAD" -->
+    <section id="materiais" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Materiais para Divulgação</h2>
+                <p>Baixe cartazes, panfletos e artes para redes sociais. Leve a campanha de valorização da vida para sua escola, empresa ou comunidade.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="material-card">
+                    <div class="material-preview" style="background: linear-gradient(135deg, #4F46E5, #818CF8);">
+                        📄
+                    </div>
+                    <div class="material-body">
+                        <h4>Kit Redes Sociais (Instagram / LinkedIn)</h4>
+                        <p>Imagens com frases de acolhimento e dados do CVV prontos para postar.</p>
+                        <div class="material-actions">
+                            <button class="btn btn-outline btn-sm" data-action="preview-material" data-preview-id="social-kit">Visualizar</button>
+                            <button type="button" class="btn btn-primary btn-sm" data-action="download-material" data-download-url="/downloads/kit-redes-sociais.zip" data-local-file="materials/downloads/Kit_Redes_Sociais_Acolher_e_Ouvir.zip" data-pages-file="materials/downloads/Kit_Redes_Sociais_Acolher_e_Ouvir.zip" data-filename="Kit_Redes_Sociais_Acolher_e_Ouvir.zip">Baixar .ZIP</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="material-card">
+                    <div class="material-preview" style="background: linear-gradient(135deg, #10B981, #34D399);">
+                        🪧
+                    </div>
+                    <div class="material-body">
+                        <h4>Cartazes para Mural (A3 / A4)</h4>
+                        <p>PDFs em alta resolução para impressão em escolas, faculdades e empresas.</p>
+                        <div class="material-actions">
+                            <button class="btn btn-outline btn-sm" data-action="preview-material" data-preview-id="poster">Visualizar</button>
+                            <button type="button" class="btn btn-primary btn-sm" data-action="download-material" data-download-url="/downloads/cartazes-a3-a4.pdf" data-local-file="materials/downloads/Cartazes_A3_A4_Acolher_e_Ouvir.pdf" data-pages-file="materials/downloads/Cartazes_A3_A4_Acolher_e_Ouvir.pdf" data-filename="Cartazes_A3_A4_Acolher_e_Ouvir.pdf">Baixar .PDF</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="material-card">
+                    <div class="material-preview" style="background: linear-gradient(135deg, #F59E0B, #FBBF24);">
+                        📘
+                    </div>
+                    <div class="material-body">
+                        <h4>Guia Prático em PDF para Líderes</h4>
+                        <p>Manual educativo para professores e RH sobre como identificar sinais de crise.</p>
+                        <div class="material-actions">
+                            <button class="btn btn-outline btn-sm" data-action="preview-material" data-preview-id="leader-guide">Visualizar</button>
+                            <button type="button" class="btn btn-primary btn-sm" data-action="download-material" data-download-url="/downloads/guia-lideranca.pdf" data-local-file="materials/downloads/Guia_Pratico_Acolhimento_Liderancas.pdf" data-pages-file="materials/downloads/Guia_Pratico_Acolhimento_Liderancas.pdf" data-filename="Guia_Pratico_Acolhimento_Liderancas.pdf">Baixar .PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#home" class="logo" style="color: white; margin-bottom: 16px;">
+                        <span>Acolher<b>&Ouvir</b></span>
+                    </a>
+                    <p style="font-size: 0.9rem; color: #9CA3AF;">
+                        Plataforma independente de conscientização, prevenção ao suicídio e incentivo ao cuidado com a saúde mental.
+                    </p>
+                </div>
+                <div>
+                    <h4>Links Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#ajuda">Buscar Ajuda</a></li>
+                        <li><a href="#sinais">Sinais de Alerta</a></li>
+                        <li><a href="#comunidade">Mural da Comunidade</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Canais de Emergência</h4>
+                    <ul class="footer-links">
+                        <li><strong>CVV:</strong> Ligue 188 (24h Gratuito)</li>
+                        <li><strong>SAMU:</strong> Ligue 192</li>
+                        <li><strong>UPA / CAPS:</strong> Atendimento Municipal</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Acolher & Ouvir. Em caso de emergência, ligue para o 188 (CVV) ou 192 (SAMU).</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL DE PREVIEW DE MATERIAIS -->
+    <div id="materialModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modalTitle">Visualização de Material</h3>
+                <button class="modal-close" data-action="close-modal">✕</button>
+            </div>
+            <div class="modal-body" id="modalContent">
+                <p>Carregando pré-visualização...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTÃO FLUTUANTE DE EMERGÊNCIA (MOBILE/FIXO) -->
+    <a href="tel:188" class="emergency-float" title="Precisa de ajuda agora? Ligue 188">
+        ⚡ 188
+    </a>
+
+    <!-- Arquivo JavaScript Externo -->
+    <script src="config.js"></script>
+    <script src="tela.js" defer></script>
+</body>
+</html>

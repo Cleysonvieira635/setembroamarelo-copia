@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Pedir ajuda também é coragem</title>
+  <desc id="desc">Arte de incentivo para buscar apoio emocional e profissional.</desc>
+  <rect width="1080" height="1080" fill="#243A46"/>
+  <path d="M0 760c230-110 430-100 630 0s330 80 450 10v310H0z" fill="#176B62"/>
+  <circle cx="870" cy="210" r="125" fill="#F1B45B"/>
+  <path d="M870 134v152M794 210h152" stroke="#243A46" stroke-width="14" stroke-linecap="round"/>
+  <text x="88" y="115" fill="#D6E4DF" font-family="Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="4">ACOLHER &amp; OUVIR</text>
+  <text x="88" y="340" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="72" font-weight="700">
+    <tspan x="88" dy="0">Pedir ajuda</tspan>
+    <tspan x="88" dy="88">também é</tspan>
+    <tspan x="88" dy="88">coragem.</tspan>
+  </text>
+  <text x="88" y="650" fill="#E1ECE7" font-family="Arial,sans-serif" font-size="29">
+    <tspan x="88" dy="0">Você pode conversar com alguém de confiança</tspan>
+    <tspan x="88" dy="42">e buscar apoio profissional.</tspan>
+  </text>
+  <rect x="88" y="790" width="904" height="112" rx="56" fill="#FFFFFF"/>
+  <text x="540" y="863" text-anchor="middle" fill="#173F3B" font-family="Arial,sans-serif" font-size="42" font-weight="700">CVV 188 • SAMU 192</text>
+  <text x="540" y="976" text-anchor="middle" fill="#E1ECE7" font-family="Arial,sans-serif" font-size="21">CVV: apoio emocional • Emergência: 192</text>
+  <text x="540" y="1020" text-anchor="middle" fill="#D6E4DF" font-family="Arial,sans-serif" font-size="18">Material educativo • Não substitui atendimento profissional</text>
+</svg>
