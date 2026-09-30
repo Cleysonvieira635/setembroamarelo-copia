@@ -9,16 +9,13 @@ const materialsDirectory = 'materials';
 const defaultDestination = 'site';
 
 function resolveApiOrigin() {
-    const apiBaseUrl = process.env.API_BASE_URL;
-
-    if (!apiBaseUrl) {
-        throw new Error('Configure a variável de repositório API_BASE_URL com a URL do backend Render.');
-    }
+    const apiBaseUrl = (process.env.API_BASE_URL || '').trim();
+    if (!apiBaseUrl) return '';
 
     const apiUrl = new URL(apiBaseUrl);
 
     if (apiUrl.protocol !== 'https:' || apiUrl.pathname !== '/' || apiUrl.search || apiUrl.hash) {
-        throw new Error('API_BASE_URL deve ser uma origem HTTPS, por exemplo https://acolher-ouvir-api.onrender.com');
+        throw new Error('API_BASE_URL deve ser uma origem HTTPS, por exemplo https://api.exemplo.com');
     }
 
     return apiUrl.origin;
@@ -52,7 +49,8 @@ function main() {
     const apiOrigin = resolveApiOrigin();
 
     buildSite(destinationDirectory, apiOrigin);
-    console.log(`Site gerado em ${path.relative(projectRoot, destinationDirectory)} apontando para ${apiOrigin}`);
+    const apiStatus = apiOrigin ? ` usando API ${apiOrigin}` : ' sem backend (modo estático)';
+    console.log(`Site gerado em ${path.relative(projectRoot, destinationDirectory)}${apiStatus}`);
 }
 
 try {

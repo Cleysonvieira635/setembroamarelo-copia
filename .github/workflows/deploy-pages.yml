@@ -31,7 +31,7 @@ jobs:
         run: npm run materials:generate
       - name: Preparar arquivos estáticos
         env:
-          API_BASE_URL: ${{ vars.API_BASE_URL || 'https://acolher-ouvir-api.onrender.com' }}
+          API_BASE_URL: ${{ vars.API_BASE_URL || '' }}
         run: node scripts/build-site.js
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5

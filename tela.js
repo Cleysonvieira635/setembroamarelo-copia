@@ -11,6 +11,9 @@ class BackendAPI {
         }
 
         const apiBaseUrl = String(window.APP_CONFIG?.apiBaseUrl || '').replace(/\/+$/, '');
+        if (window.location.hostname.endsWith('github.io') && !apiBaseUrl) {
+            throw new Error('Esta publicação está no modo estático. Chat, mural e busca precisam de um backend. Para apoio emocional, ligue 188 (CVV); em emergência, ligue 192 (SAMU).');
+        }
         const apiUrl = `${apiBaseUrl}${url}`;
         const response = await fetch(apiUrl, options);
         const data = await response.json();

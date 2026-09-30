@@ -30,17 +30,15 @@ O banco SQLite é criado automaticamente em `data/acolher-ouvir.sqlite`. Mensage
 
 A busca consulta nome, endereço, cidade e tipo. Sem unidades configuradas, o site orienta o visitante a procurar os serviços municipais.
 
-## Publicar no GitHub Pages e Render
+## Publicar no GitHub Pages
 
-O workflow `.github/workflows/deploy-pages.yml` publica a interface em `https://setembroamarelo.github.io/`. Para ativar:
+O workflow `.github/workflows/deploy-pages.yml` publica o site gratuitamente em `https://setembroamarelo.github.io/`. O repositório especial `setembroamarelo/setembroamarelo.github.io` já está configurado para publicar pela origem **GitHub Actions**; novos commits em `main` atualizam o site.
 
-1. Envie o projeto para o repositório especial `setembroamarelo/setembroamarelo.github.io` e habilite Pages com a origem **GitHub Actions** nas configurações do repositório.
-2. Crie o serviço do backend no Render usando `render.yaml` e escolha o plano gratuito. Informe `GEMINI_API_KEY` diretamente no painel do Render, sem colocá-la no GitHub.
-3. No plano gratuito o SQLite fica em `/tmp` e não tem persistência: mensagens e curtidas podem ser apagadas quando o serviço reinicia, é atualizado ou suspende após inatividade. O serviço também pode levar cerca de um minuto para acordar após ficar ocioso.
-4. No GitHub, crie a variável de repositório `API_BASE_URL` com a URL HTTPS do serviço Render, por exemplo `https://acolher-ouvir-api.onrender.com`.
-5. Envie um commit para `main` ou `master`. O workflow publica a interface; o Render publica a API.
+Nenhuma configuração ou serviço do Render é necessário para manter o domínio, o conteúdo, as imagens e os downloads publicados.
 
-O GitHub Pages hospeda somente os arquivos estáticos. Chat, mural e busca dependem do serviço backend no Render. O backend permite CORS apenas para `https://setembroamarelo.github.io`, conforme `CORS_ORIGINS` em `render.yaml`.
+GitHub Pages hospeda apenas arquivos estáticos. Sem um backend separado, chat, mural interativo e busca de unidades exibem uma mensagem informativa e ficam indisponíveis. Se um backend for conectado no futuro, configure a variável opcional `API_BASE_URL` nas variáveis do repositório.
+
+O `render.yaml` permanece como opção de implantação do backend, mas não é utilizado pelo workflow do GitHub Pages.
 
 As artes SVG ficam em `materials/social`. Para gerar cópias físicas dos downloads do site em `materials/downloads`, execute `npm run materials:generate`.
 
