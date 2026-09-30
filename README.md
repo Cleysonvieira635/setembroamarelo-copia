@@ -32,15 +32,15 @@ A busca consulta nome, endereço, cidade e tipo. Sem unidades configuradas, o si
 
 ## Publicar no GitHub Pages e Render
 
-O workflow `.github/workflows/deploy-pages.yml` publica a interface em `https://cleysonvieira635.github.io/setembroamarelo/`. Para ativar:
+O workflow `.github/workflows/deploy-pages.yml` publica a interface em `https://setembroamarelo.github.io/`. Para ativar:
 
-1. Envie o projeto para o repositório `Cleysonvieira635/setembroamarelo` no GitHub e habilite Pages com a origem **GitHub Actions** nas configurações do repositório.
+1. Envie o projeto para o repositório especial `setembroamarelo/setembroamarelo.github.io` e habilite Pages com a origem **GitHub Actions** nas configurações do repositório.
 2. Crie o serviço do backend no Render usando `render.yaml`. Na primeira configuração, informe `GEMINI_API_KEY` diretamente no painel do Render.
 3. Use um plano pago do Render que permita disco persistente. O banco SQLite é montado em `/var/data`; sem esse disco as mensagens podem ser perdidas em reinícios ou novos deploys.
 4. No GitHub, crie a variável de repositório `API_BASE_URL` com a URL HTTPS do serviço Render, por exemplo `https://acolher-ouvir-api.onrender.com`.
 5. Envie um commit para `main` ou `master`. O workflow publica a interface; o Render publica a API.
 
-O GitHub Pages hospeda somente os arquivos estáticos. Chat, mural e busca dependem do serviço backend no Render. O backend permite CORS apenas para `https://cleysonvieira635.github.io`, conforme `CORS_ORIGINS` em `render.yaml`.
+O GitHub Pages hospeda somente os arquivos estáticos. Chat, mural e busca dependem do serviço backend no Render. O backend permite CORS apenas para `https://setembroamarelo.github.io`, conforme `CORS_ORIGINS` em `render.yaml`.
 
 As artes SVG ficam em `materials/social`. Para gerar cópias físicas dos downloads do site em `materials/downloads`, execute `npm run materials:generate`.
 
