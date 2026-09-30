@@ -6,7 +6,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "materials:generate": "node scripts/generate-materials.js"
+    "materials:generate": "node scripts/generate-materials.js",
+    "cf:dev": "wrangler dev",
+    "cf:d1:migrate": "wrangler d1 migrations apply setembroamarelo-db --remote",
+    "cf:deploy": "wrangler deploy"
   },
   "engines": {
     "node": ">=18"
@@ -20,5 +23,8 @@
     "express-rate-limit": "^7.5.0",
     "helmet": "^8.1.0",
     "pdfkit": "^0.20.2"
+  },
+  "devDependencies": {
+    "wrangler": "^4.145.0"
   }
 }

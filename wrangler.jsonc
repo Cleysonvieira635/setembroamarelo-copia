@@ -1,0 +1,20 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "setembroamarelo-api",
+	"main": "cloudflare/worker.js",
+	"compatibility_date": "2026-09-30",
+	"observability": {
+		"enabled": true
+	},
+	"vars": {
+		"CORS_ORIGINS": "https://setembroamarelo.github.io,http://localhost:3000,http://localhost:8787,http://127.0.0.1:8787"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "setembroamarelo-db",
+			"database_id": "347bdc36-3e41-44dd-b330-ab64e48fcca5",
+			"migrations_dir": "cloudflare/migrations"
+		}
+	]
+}

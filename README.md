@@ -34,11 +34,20 @@ A busca consulta nome, endereço, cidade e tipo. Sem unidades configuradas, o si
 
 O workflow `.github/workflows/deploy-pages.yml` publica o site gratuitamente em `https://setembroamarelo.github.io/`. O repositório especial `setembroamarelo/setembroamarelo.github.io` já está configurado para publicar pela origem **GitHub Actions**; novos commits em `main` atualizam o site.
 
-Nenhuma configuração ou serviço do Render é necessário para manter o domínio, o conteúdo, as imagens e os downloads publicados.
+O GitHub Pages hospeda a interface estática gratuitamente. O backend da API pode ser publicado como Cloudflare Worker e usa D1 para guardar mensagens, curtidas e unidades.
 
-GitHub Pages hospeda apenas arquivos estáticos. Sem um backend separado, chat, mural interativo e busca de unidades exibem uma mensagem informativa e ficam indisponíveis. Se um backend for conectado no futuro, configure a variável opcional `API_BASE_URL` nas variáveis do repositório.
+## Backend Cloudflare Workers + D1
 
-O `render.yaml` permanece como opção de implantação do backend, mas não é utilizado pelo workflow do GitHub Pages.
+Para publicar a API sem Render:
+
+1. Instale/execute o Wrangler com `npx wrangler login` e autentique sua conta Cloudflare no navegador.
+2. Crie o banco com `npx wrangler d1 create setembroamarelo-db` e copie o `database_id` retornado para `wrangler.jsonc`, substituindo o identificador de exemplo.
+3. Aplique a migração inicial com `npm run cf:d1:migrate`.
+4. Publique o Worker com `npm run cf:deploy` e anote a URL `workers.dev` exibida.
+5. Configure `API_BASE_URL` nas variáveis do repositório GitHub com a origem HTTPS do Worker. O workflow reconstruirá o Pages conectado à API no próximo push.
+6. Opcionalmente, configure a chave Gemini como segredo com `npx wrangler secret put GEMINI_API_KEY`. Sem ela, o chat usa orientação padrão e o mural não aceita novas publicações moderadas.
+
+O plano gratuito atual inclui 100 mil chamadas Worker por dia; D1 inclui 5 milhões de linhas lidas por dia, 100 mil escritas por dia e 5 GB de armazenamento. Cotas excedidas podem suspender consultas até a renovação diária.
 
 As artes SVG ficam em `materials/social`. Para gerar cópias físicas dos downloads do site em `materials/downloads`, execute `npm run materials:generate`.
 
