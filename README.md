@@ -35,8 +35,8 @@ A busca consulta nome, endereço, cidade e tipo. Sem unidades configuradas, o si
 O workflow `.github/workflows/deploy-pages.yml` publica a interface em `https://setembroamarelo.github.io/`. Para ativar:
 
 1. Envie o projeto para o repositório especial `setembroamarelo/setembroamarelo.github.io` e habilite Pages com a origem **GitHub Actions** nas configurações do repositório.
-2. Crie o serviço do backend no Render usando `render.yaml`. Na primeira configuração, informe `GEMINI_API_KEY` diretamente no painel do Render.
-3. Use um plano pago do Render que permita disco persistente. O banco SQLite é montado em `/var/data`; sem esse disco as mensagens podem ser perdidas em reinícios ou novos deploys.
+2. Crie o serviço do backend no Render usando `render.yaml` e escolha o plano gratuito. Informe `GEMINI_API_KEY` diretamente no painel do Render, sem colocá-la no GitHub.
+3. No plano gratuito o SQLite fica em `/tmp` e não tem persistência: mensagens e curtidas podem ser apagadas quando o serviço reinicia, é atualizado ou suspende após inatividade. O serviço também pode levar cerca de um minuto para acordar após ficar ocioso.
 4. No GitHub, crie a variável de repositório `API_BASE_URL` com a URL HTTPS do serviço Render, por exemplo `https://acolher-ouvir-api.onrender.com`.
 5. Envie um commit para `main` ou `master`. O workflow publica a interface; o Render publica a API.
 

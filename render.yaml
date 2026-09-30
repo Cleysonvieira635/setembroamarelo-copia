@@ -2,19 +2,15 @@ services:
   - type: web
     name: acolher-ouvir-api
     runtime: node
-    plan: 0.5c-512mb
+    plan: free
     buildCommand: npm ci
     startCommand: npm start
     healthCheckPath: /api/health
-    disk:
-      name: acolher-ouvir-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
       - key: DB_PATH
-        value: /var/data/acolher-ouvir.sqlite
+        value: /tmp/acolher-ouvir.sqlite
       - key: CORS_ORIGINS
         value: https://setembroamarelo.github.io
       - key: GEMINI_API_KEY
