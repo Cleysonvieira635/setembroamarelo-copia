@@ -172,7 +172,7 @@ app.post('/api/mural', async (req, res) => {
 
     try {
         const moderation = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-flash-latest',
             contents: [{ role: 'user', parts: [{ text }] }],
             config: {
                 systemInstruction: 'Modere uma mensagem para um mural público de apoio emocional. Reprove insultos, julgamentos, conteúdo de automutilação ou suicídio explícito e dados pessoais. Responda somente JSON: {"approved": boolean, "reason": string}.',
@@ -216,7 +216,7 @@ app.post('/api/chat', async (req, res) => {
 
     try {
         const aiResponse = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-flash-latest',
             contents: [{ role: 'user', parts: [{ text: userMessage }] }],
             config: {
                 systemInstruction: 'Você é um assistente virtual de informação e acolhimento, não um psicólogo, terapeuta, serviço de emergência ou voluntário do CVV. Responda em português com empatia, sem diagnosticar nem prometer sigilo. Não conduza terapia. Se a pessoa mencionar risco de suicídio, automutilação ou perigo imediato, incentive-a a ligar 188 (CVV), 192 (SAMU) ou procurar um pronto atendimento e a ficar perto de alguém de confiança. Retorne somente JSON: {"isCrisis": boolean, "reply": string}.',
