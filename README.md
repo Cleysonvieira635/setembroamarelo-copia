@@ -43,9 +43,11 @@ Para publicar a API sem Render:
 1. Instale/execute o Wrangler com `npx wrangler login` e autentique sua conta Cloudflare no navegador.
 2. Crie o banco com `npx wrangler d1 create setembroamarelo-db` e copie o `database_id` retornado para `wrangler.jsonc`, substituindo o identificador de exemplo.
 3. Aplique a migração inicial com `npm run cf:d1:migrate`.
-4. Publique o Worker com `npm run cf:deploy` e anote a URL `workers.dev` exibida.
-5. Configure `API_BASE_URL` nas variáveis do repositório GitHub com a origem HTTPS do Worker. O workflow reconstruirá o Pages conectado à API no próximo push.
-6. Opcionalmente, configure a chave Gemini como segredo com `npx wrangler secret put GEMINI_API_KEY`. Sem ela, o chat usa orientação padrão e o mural não aceita novas publicações moderadas.
+4. A IA usa o Cloudflare Workers AI (plano gratuito, binding `AI` em `wrangler.jsonc`); não é necessário nenhum segredo ou chave.
+5. Publique o Worker com `npm run cf:deploy` e anote a URL `workers.dev` exibida.
+6. Configure `API_BASE_URL` nas variáveis do repositório GitHub com a origem HTTPS do Worker. O workflow reconstruirá o Pages conectado à API no próximo push.
+
+No Worker publicado tudo é gratuito: GitHub Pages, Cloudflare Workers, D1 e Workers AI (cota diária limitada).
 
 O plano gratuito atual inclui 100 mil chamadas Worker por dia; D1 inclui 5 milhões de linhas lidas por dia, 100 mil escritas por dia e 5 GB de armazenamento. Cotas excedidas podem suspender consultas até a renovação diária.
 

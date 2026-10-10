@@ -44,26 +44,21 @@ async function parseBody(request) {
     }
 }
 
-async function generateGeminiJson(env, instruction, text) {
-    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-goog-api-key': env.GEMINI_API_KEY
-        },
-        body: JSON.stringify({
-            systemInstruction: { parts: [{ text: instruction }] },
-            contents: [{ role: 'user', parts: [{ text }] }],
-            generationConfig: { responseMimeType: 'application/json' }
-        })
+async function generateAiJson(env, instruction, text) {
+    const data = await env.AI.run('@cf/meta/llama-4-scout-17b-16e-instruct', {
+        messages: [
+            { role: 'system', content: `${instruction}\nResponda somente com JSON válido.` },
+            { role: 'user', content: text }
+        ],
+        max_tokens: 600
     });
 
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error?.message || `Gemini respondeu HTTP ${response.status}.`);
-
-    const output = data.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('').trim();
-    if (!output) throw new Error('Gemini não retornou conteúdo.');
-    return JSON.parse(output);
+    let output = data?.response;
+    if (output && typeof output === 'object') return output;
+    output = String(output || '').trim();
+    const match = output.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('A IA não retornou JSON.');
+    return JSON.parse(match[0]);
 }
 
 async function listUnits(request, env, url) {
@@ -100,12 +95,12 @@ async function createMessage(request, env) {
     if (text.length < 3 || text.length > 250) {
         return json(request, env, { error: 'A mensagem deve ter entre 3 e 250 caracteres.' }, 400);
     }
-    if (!env.GEMINI_API_KEY) {
+    if (!env.AI) {
         return json(request, env, { error: 'A publicação está indisponível porque a moderação não está configurada.' }, 503);
     }
 
     try {
-        const moderation = await generateGeminiJson(env, MODERATION_INSTRUCTION, text);
+        const moderation = await generateAiJson(env, MODERATION_INSTRUCTION, text);
         if (!moderation.approved) {
             return json(request, env, { error: moderation.reason || 'A mensagem não pode ser publicada.' }, 400);
         }
@@ -146,14 +141,14 @@ async function chat(request, env) {
     if (!userMessage || userMessage.length > 2000) {
         return json(request, env, { error: 'Escreva uma mensagem com até 2.000 caracteres.' }, 400);
     }
-    if (!env.GEMINI_API_KEY) {
+    if (!env.AI) {
         return json(request, env, { emergencyAlert: false, message: CHAT_FALLBACK });
     }
 
     try {
-        const result = await generateGeminiJson(env, CHAT_SYSTEM_INSTRUCTION, userMessage);
+        const result = await generateAiJson(env, CHAT_SYSTEM_INSTRUCTION, userMessage);
         if (result.isCrisis) return json(request, env, { emergencyAlert: true, phone: '188', message: CHAT_CRISIS });
-        if (typeof result.reply !== 'string' || !result.reply.trim()) throw new Error('Gemini não retornou uma resposta válida.');
+        if (typeof result.reply !== 'string' || !result.reply.trim()) throw new Error('A IA não retornou uma resposta válida.');
         return json(request, env, { emergencyAlert: false, message: result.reply });
     } catch (error) {
         console.error('Falha no assistente virtual:', errorMessage(error, 'Erro desconhecido.'));
