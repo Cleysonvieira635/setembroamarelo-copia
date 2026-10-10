@@ -5,7 +5,8 @@ const DEFAULT_ORIGINS = [
 
 const CHAT_FALLBACK = 'Obrigado por compartilhar. Este site não oferece atendimento psicológico. Converse com alguém de confiança e, se precisar de apoio emocional, ligue gratuitamente para o CVV no 188. Em risco imediato, ligue 192 ou vá a um pronto atendimento.';
 const CHAT_CRISIS = 'Sinto muito que esteja passando por isso. Este chat não é um serviço de emergência. Ligue gratuitamente para o CVV no 188, para o SAMU no 192, ou vá a um pronto atendimento. Se possível, fique agora perto de alguém de confiança.';
-const CHAT_SYSTEM_INSTRUCTION = 'Você é um assistente virtual de informação e acolhimento, não um psicólogo, terapeuta, serviço de emergência ou voluntário do CVV. Responda em português com empatia, sem diagnosticar nem prometer sigilo. Não conduza terapia. Se a pessoa mencionar risco de suicídio, automutilação ou perigo imediato, incentive-a a ligar 188 (CVV), 192 (SAMU) ou procurar um pronto atendimento e a ficar perto de alguém de confiança. Retorne somente JSON: {"isCrisis": boolean, "reply": string}.';
+const CHAT_SYSTEM_INSTRUCTION = 'Você é um assistente virtual de informação e acolhimento, não um psicólogo, terapeuta, serviço de emergência ou voluntário do CVV. Responda em português com empatia, sem diagnosticar nem prometer sigilo. Não conduza terapia. Se a pessoa mencionar risco de suicídio, automutilação ou perigo imediato, incentive-a a ligar 188 (CVV), 192 (SAMU) ou procurar um pronto atendimento e a ficar perto de alguém de confiança. Você também pode guiar a pessoa pelo site: quando fizer sentido, inclua "action" com um destes valores: "ajuda" (contatos e serviços de apoio), "respiracao" (exercício de respiração), "sinais" (sinais de alerta e como ajudar), "mural" (mural da comunidade), "materiais" (materiais), ou null. Retorne somente JSON: {"isCrisis": boolean, "reply": string, "action": string|null}.';
+const SITE_ACTIONS = new Set(['ajuda', 'respiracao', 'sinais', 'mural', 'materiais']);
 const MODERATION_INSTRUCTION = 'Modere uma mensagem para um mural público de apoio emocional. Reprove insultos, julgamentos, conteúdo de automutilação ou suicídio explícito e dados pessoais. Responda somente JSON: {"approved": boolean, "reason": string}.';
 
 function allowedOrigins(env) {
@@ -147,9 +148,19 @@ async function chat(request, env) {
 
     try {
         const result = await generateAiJson(env, CHAT_SYSTEM_INSTRUCTION, userMessage);
-        if (result.isCrisis) return json(request, env, { emergencyAlert: true, phone: '188', message: CHAT_CRISIS });
-        if (typeof result.reply !== 'string' || !result.reply.trim()) throw new Error('A IA não retornou uma resposta válida.');
-        return json(request, env, { emergencyAlert: false, message: result.reply });
+        if (result.isCrisis) {
+            return json(request, env, {
+                emergencyAlert: true,
+                phone: '188',
+                message: CHAT_CRISIS,
+                action: 'ajuda'
+            });
+        }
+        if (typeof result.reply !== 'string' || !result.reply.trim()) {
+            throw new Error('A IA não retornou uma resposta válida.');
+        }
+        const action = SITE_ACTIONS.has(result.action) ? result.action : null;
+        return json(request, env, { emergencyAlert: false, message: result.reply, action });
     } catch (error) {
         console.error('Falha no assistente virtual:', errorMessage(error, 'Erro desconhecido.'));
         return json(request, env, {

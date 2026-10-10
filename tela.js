@@ -90,6 +90,30 @@ function toggleChatSimulator() {
     chat.style.display = chat.style.display === 'none' ? 'block' : 'none';
 }
 
+const SITE_ACTION_TARGETS = {
+    ajuda: 'ajuda',
+    respiracao: 'breathBtn',
+    sinais: 'sinais',
+    mural: 'comunidade',
+    materiais: 'materiais'
+};
+
+function runSiteAction(action) {
+    const targetId = SITE_ACTION_TARGETS[action];
+    const target = targetId && document.getElementById(targetId);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: action === 'respiracao' ? 'center' : 'start' });
+    if (action === 'respiracao' && !isBreathing) {
+        setTimeout(() => {
+            if (!isBreathing) toggleBreathing();
+        }, 500);
+    }
+    const box = target.closest('.card') || target;
+    box.style.transition = 'box-shadow 0.4s';
+    box.style.boxShadow = '0 0 0 4px #f5c518';
+    setTimeout(() => { box.style.boxShadow = ''; }, 3000);
+}
+
 async function sendChatMessage() {
     const input = document.getElementById('chatInput');
     const container = document.getElementById('chatMessages');
@@ -116,6 +140,7 @@ async function sendChatMessage() {
         botMsg.textContent = response.message;
         container.appendChild(botMsg);
         container.scrollTop = container.scrollHeight;
+        runSiteAction(response.action);
     } catch (error) {
         const botMsg = document.createElement('div');
         botMsg.className = 'message msg-bot';

@@ -219,7 +219,7 @@ app.post('/api/chat', async (req, res) => {
             model: 'gemini-flash-lite-latest',
             contents: [{ role: 'user', parts: [{ text: userMessage }] }],
             config: {
-                systemInstruction: 'Você é um assistente virtual de informação e acolhimento, não um psicólogo, terapeuta, serviço de emergência ou voluntário do CVV. Responda em português com empatia, sem diagnosticar nem prometer sigilo. Não conduza terapia. Se a pessoa mencionar risco de suicídio, automutilação ou perigo imediato, incentive-a a ligar 188 (CVV), 192 (SAMU) ou procurar um pronto atendimento e a ficar perto de alguém de confiança. Retorne somente JSON: {"isCrisis": boolean, "reply": string}.',
+                systemInstruction: 'Você é um assistente virtual de informação e acolhimento, não um psicólogo, terapeuta, serviço de emergência ou voluntário do CVV. Responda em português com empatia, sem diagnosticar nem prometer sigilo. Não conduza terapia. Se a pessoa mencionar risco de suicídio, automutilação ou perigo imediato, incentive-a a ligar 188 (CVV), 192 (SAMU) ou procurar um pronto atendimento e a ficar perto de alguém de confiança. Você também pode guiar a pessoa pelo site: inclua "action" com "ajuda", "respiracao", "sinais", "mural", "materiais" ou null. Retorne somente JSON: {"isCrisis": boolean, "reply": string, "action": string|null}.',
                 responseMimeType: 'application/json'
             }
         });
@@ -228,10 +228,12 @@ app.post('/api/chat', async (req, res) => {
             return res.json({
                 emergencyAlert: true,
                 phone: '188',
+                action: 'ajuda',
                 message: 'Sinto muito que esteja passando por isso. Este chat não é um serviço de emergência. Ligue gratuitamente para o CVV no 188, para o SAMU no 192, ou vá a um pronto atendimento. Se possível, fique agora perto de alguém de confiança.'
             });
         }
-        return res.json({ emergencyAlert: false, message: result.reply });
+        const action = ['ajuda', 'respiracao', 'sinais', 'mural', 'materiais'].includes(result.action) ? result.action : null;
+        return res.json({ emergencyAlert: false, message: result.reply, action });
     } catch (error) {
         console.error('Falha no assistente virtual:', error.message);
         return res.status(503).json({

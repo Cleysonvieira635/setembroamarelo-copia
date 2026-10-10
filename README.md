@@ -51,6 +51,18 @@ No Worker publicado tudo é gratuito: GitHub Pages, Cloudflare Workers, D1 e Wor
 
 O plano gratuito atual inclui 100 mil chamadas Worker por dia; D1 inclui 5 milhões de linhas lidas por dia, 100 mil escritas por dia e 5 GB de armazenamento. Cotas excedidas podem suspender consultas até a renovação diária.
 
+## IA guiando a navegação do site
+
+Além de responder no chat, o assistente pode sugerir navegação dentro do site. A API pode retornar `action` em `POST /api/chat` com um destes valores:
+
+- `ajuda`: rola para a seção de contatos e serviços de apoio
+- `respiracao`: rola para o exercício de respiração e inicia automaticamente o ciclo 4-4-4
+- `sinais`: rola para sinais de alerta
+- `mural`: rola para o mural da comunidade
+- `materiais`: rola para materiais de apoio
+
+Quando `action` é retornada, a interface faz rolagem suave e destaca visualmente o bloco correspondente.
+
 As artes SVG ficam em `materials/social`. Para gerar cópias físicas dos downloads do site em `materials/downloads`, execute `npm run materials:generate`.
 
 ## Rotas
