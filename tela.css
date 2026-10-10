@@ -242,6 +242,14 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+.hero-campaign-image {
+    display: block;
+    width: min(100%, 420px);
+    height: auto;
+    margin: 0 auto 24px;
+    border-radius: 12px;
+}
+
 .hero-subtitle {
     font-size: 1.2rem;
     color: var(--text-muted);
