@@ -956,3 +956,5 @@ body.high-contrast{--primary:#1E1B8F;--primary-hover:#14126B;--text-muted:#11182
 body.high-contrast a:not(.btn){color:#00008B;text-decoration:underline}
 body.high-contrast .card,body.high-contrast .hero-card{border:2px solid #000}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;align-items:center}.media-grid img,.media-video{max-width:100%;height:auto;border-radius:12px}.media-emblem{max-width:140px!important;margin-bottom:1rem}.media-video{width:100%;background:#000}

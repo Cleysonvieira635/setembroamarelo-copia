@@ -40,6 +40,9 @@ function buildSite(destinationDirectory, apiOrigin) {
     copyStaticFiles(destinationDirectory);
     writeSiteConfig(destinationDirectory, apiOrigin);
     fs.cpSync(path.join(projectRoot, materialsDirectory), path.join(destinationDirectory, materialsDirectory), { recursive: true });
+    for (const dir of ['img', 'videos']) {
+        fs.cpSync(path.join(projectRoot, dir), path.join(destinationDirectory, dir), { recursive: true });
+    }
     fs.writeFileSync(path.join(destinationDirectory, '.nojekyll'), '');
 }
 
@@ -59,3 +62,4 @@ try {
     console.error('Falha ao gerar o site:', error.message);
     process.exitCode = 1;
 }
+
