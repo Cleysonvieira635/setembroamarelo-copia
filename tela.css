@@ -944,3 +944,15 @@ body {
     .header-cta .btn { width: 44px; height: 40px; padding: 0; gap: 0; font-size: 0; }
     .header-cta .btn::after { content: '188'; font-size: 0.75rem; }
 }
+
+/* Acessibilidade */
+.skip-link{position:absolute;left:-999px;top:8px;background:#111827;color:#fff;padding:10px 16px;border-radius:8px;z-index:10000}
+.skip-link:focus{left:8px}
+:focus-visible{outline:3px solid #F59E0B;outline-offset:3px}
+.a11y-bar{position:fixed;left:12px;bottom:12px;z-index:9999;display:flex;gap:6px;background:#fff;border:2px solid #4F46E5;border-radius:12px;padding:6px;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.a11y-bar button{font:inherit;font-weight:700;min-width:40px;min-height:40px;border:1px solid #4F46E5;background:#fff;color:#4F46E5;border-radius:8px;cursor:pointer}
+.a11y-bar button[aria-pressed="true"]{background:#4F46E5;color:#fff}
+body.high-contrast{--primary:#1E1B8F;--primary-hover:#14126B;--text-muted:#111827;--text-light:#111827;--border:#111827;--bg-light:#fff;background:#fff;color:#000}
+body.high-contrast a:not(.btn){color:#00008B;text-decoration:underline}
+body.high-contrast .card,body.high-contrast .hero-card{border:2px solid #000}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

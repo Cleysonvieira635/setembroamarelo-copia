@@ -620,3 +620,36 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => { if (window.L && document.getElementById('unitsMap')) ensureMap(); });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const body = document.body;
+    const load = (k, d) => { try { return localStorage.getItem(k) ?? d; } catch (e) { return d; } };
+    const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* opcional */ } };
+    let zoom = Number(load('a11y-zoom', '1'));
+    let contrast = load('a11y-contrast', '0') === '1';
+    const apply = () => {
+        body.style.zoom = zoom;
+        body.classList.toggle('high-contrast', contrast);
+        cbtn.setAttribute('aria-pressed', String(contrast));
+    };
+    const bar = document.createElement('div');
+    bar.className = 'a11y-bar';
+    bar.setAttribute('role', 'group');
+    bar.setAttribute('aria-label', 'Opções de acessibilidade');
+    const mk = (txt, label) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.textContent = txt; b.setAttribute('aria-label', label); b.title = label;
+        bar.appendChild(b); return b;
+    };
+    const minus = mk('A-', 'Diminuir texto');
+    const plus = mk('A+', 'Aumentar texto');
+    const cbtn = mk('◐', 'Alto contraste');
+    minus.addEventListener('click', () => { zoom = Math.max(0.9, +(zoom - 0.1).toFixed(1)); save('a11y-zoom', zoom); apply(); });
+    plus.addEventListener('click', () => { zoom = Math.min(1.5, +(zoom + 0.1).toFixed(1)); save('a11y-zoom', zoom); apply(); });
+    cbtn.addEventListener('click', () => { contrast = !contrast; save('a11y-contrast', contrast ? '1' : '0'); apply(); });
+    body.appendChild(bar);
+    const skip = document.createElement('a');
+    skip.href = '#home'; skip.className = 'skip-link'; skip.textContent = 'Pular para o conteúdo';
+    body.insertBefore(skip, body.firstChild);
+    apply();
+});
