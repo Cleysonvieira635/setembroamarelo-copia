@@ -207,17 +207,27 @@ async function searchHealthUnits() {
         return;
     }
 
-    list.innerHTML = "<p style='font-size:0.85rem;'>Buscando unidades públicas próximas...</p>";
+    if (searchHealthUnits.running) return;
+    searchHealthUnits.running = true;
+    const button = document.querySelector('[data-action="search-units"]');
+    const originalLabel = button ? button.textContent : '';
+    if (button) { button.disabled = true; button.textContent = 'Buscando...'; }
+    list.innerHTML = "<p style='font-size:0.85rem;'>⏳ Buscando unidades públicas próximas... pode levar até 30 segundos.</p>";
+    list.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     let units = [];
     let center = null;
     try {
         center = await geocodeQuery(input);
         if (center) {
             ensureMap().setView([center.lat, center.lng], 13);
+            list.innerHTML = "<p style='font-size:0.85rem;'>📍 Local encontrado. Procurando CAPS e UBS...</p>";
             units = await fetchNearbyUnits(center);
         }
     } catch (error) {
         console.warn('Busca no mapa falhou:', error);
+    } finally {
+        searchHealthUnits.running = false;
+        if (button) { button.disabled = false; button.textContent = originalLabel; }
     }
 
     if (!center) {
