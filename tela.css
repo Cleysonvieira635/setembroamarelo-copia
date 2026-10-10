@@ -162,6 +162,12 @@ body {
     font-weight: 700;
 }
 
+.logo-emblem {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
 .logo b {
     color: var(--text-dark);
 }
@@ -940,7 +946,7 @@ body {
     .container { padding: 0 16px; }
     .header { padding: 12px 0; }
     .logo { gap: 6px; font-size: 1.05rem; }
-    .logo svg { width: 24px; height: 24px; }
+    .logo-emblem { width: 24px; height: 24px; }
     .header-cta .btn { width: 44px; height: 40px; padding: 0; gap: 0; font-size: 0; }
     .header-cta .btn::after { content: '188'; font-size: 0.75rem; }
 }
