@@ -217,11 +217,30 @@ async function searchHealthUnits() {
     let units = [];
     let center = null;
     try {
-        center = await geocodeQuery(input);
-        if (center) {
+        const normalized = input.trim().toLowerCase();
+        const digits = normalized.replace(/\D/g, '');
+        const cacheKey = 'units:' + (digits.length === 8 ? digits : normalized);
+        let cached = null;
+        try { cached = JSON.parse(sessionStorage.getItem(cacheKey)); } catch (e) { cached = null; }
+        if (cached && cached.center && cached.units && cached.units.length) {
+            center = cached.center;
+            units = cached.units;
             ensureMap().setView([center.lat, center.lng], 13);
-            list.innerHTML = "<p style='font-size:0.85rem;'>📍 Local encontrado. Procurando CAPS e UBS...</p>";
-            units = await fetchNearbyUnits(center);
+        } else {
+            center = await geocodeQuery(input);
+            if (center) {
+                ensureMap().setView([center.lat, center.lng], 13);
+                list.innerHTML = "<p style='font-size:0.85rem;'>📍 Local encontrado. Procurando CAPS e UBS...</p>";
+                units = await fetchNearbyUnits(center);
+                if (units.length) {
+                    try {
+                        sessionStorage.setItem(cacheKey, JSON.stringify({
+                            center,
+                            units: units.map(({ marker, ...rest }) => rest)
+                        }));
+                    } catch (e) { /* cache é opcional */ }
+                }
+            }
         }
     } catch (error) {
         console.warn('Busca no mapa falhou:', error);
