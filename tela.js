@@ -208,29 +208,151 @@ async function searchHealthUnits() {
     }
 
     list.innerHTML = "<p style='font-size:0.85rem;'>Buscando unidades públicas próximas...</p>";
-    let result;
+    let units = [];
+    let center = null;
     try {
-        result = await api.getUnitsByCep(input);
+        center = await geocodeQuery(input);
+        if (center) {
+            ensureMap().setView([center.lat, center.lng], 13);
+            units = await fetchNearbyUnits(center);
+        }
     } catch (error) {
-        list.textContent = error.message;
+        console.warn('Busca no mapa falhou:', error);
+    }
+
+    if (!center) {
+        list.textContent = 'Não encontramos esse CEP ou cidade. Confira e tente novamente.';
         return;
     }
 
-    list.innerHTML = "";
-    if (result.units.length === 0) {
-        list.textContent = result.message;
+    list.innerHTML = '';
+    renderUnitMarkers(center, units);
+    if (units.length === 0) {
+        list.textContent = 'Nenhuma unidade encontrada no mapa por aqui. Ligue 188 (CVV), 192 (SAMU) ou 136 (Disque Saúde).';
+        return;
     }
-    result.units.forEach(unit => {
+    units.forEach(unit => {
         const div = document.createElement('div');
         div.className = 'unit-item';
         const name = document.createElement('h5');
         name.textContent = unit.name;
         const address = document.createElement('p');
-        address.textContent = `📍 ${unit.address}`;
-        const phone = document.createElement('p');
-        phone.textContent = `📞 ${unit.phone}`;
-        div.append(name, address, phone);
+        address.textContent = `📍 ${unit.address} · ${unit.distance.toFixed(1)} km`;
+        div.append(name, address);
+        if (unit.phone) {
+            const phone = document.createElement('p');
+            phone.textContent = `📞 ${unit.phone}`;
+            div.appendChild(phone);
+        }
+        div.addEventListener('click', () => {
+            if (unit.marker) {
+                healthMap.setView([unit.lat, unit.lng], 16);
+                unit.marker.openPopup();
+            }
+        });
         list.appendChild(div);
+    });
+}
+
+let healthMap = null;
+let healthLayer = null;
+
+function ensureMap() {
+    if (healthMap) return healthMap;
+    const el = document.getElementById('unitsMap');
+    el.classList.remove('map-placeholder');
+    el.classList.add('health-map');
+    el.innerHTML = '';
+    healthMap = L.map(el).setView([-14.235, -51.925], 4);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; Contribuidores do OpenStreetMap'
+    }).addTo(healthMap);
+    healthLayer = L.layerGroup().addTo(healthMap);
+    return healthMap;
+}
+
+async function geocodeQuery(input) {
+    const digits = input.replace(/\D/g, '');
+    let q = input;
+    if (digits.length === 8) {
+        const r = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
+        const d = await r.json();
+        if (d.erro) return null;
+        q = `${d.logradouro || ''} ${d.bairro || ''}, ${d.localidade}, ${d.uf}`.trim();
+    }
+    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=br&q=${encodeURIComponent(q)}`;
+    let res = await (await fetch(url)).json();
+    if (!res.length && digits.length === 8) {
+        const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=br&postalcode=${digits}`);
+        res = await r.json();
+    }
+    return res.length ? { lat: parseFloat(res[0].lat), lng: parseFloat(res[0].lon) } : null;
+}
+
+function haversineKm(a, b) {
+    const rad = x => x * Math.PI / 180;
+    const dLat = rad(b.lat - a.lat);
+    const dLng = rad(b.lng - a.lng);
+    const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLng / 2) ** 2;
+    return 12742 * Math.asin(Math.sqrt(h));
+}
+
+async function fetchNearbyUnits(center) {
+    const around = `(around:5000,${center.lat},${center.lng})`;
+    const query = `[out:json][timeout:25];nwr["amenity"~"clinic|hospital|doctors"]${around};out center 150;`;
+    const publicRe = /CAPS|UBS|Unidade B[aá]sica|Posto de Sa[uú]de|Centro de Sa[uú]de|UPA|Psicossocial|Hospital Municipal|SUS/i;
+    const endpoints = [
+        'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
+        'https://overpass-api.de/api/interpreter',
+        'https://overpass.kumi.systems/api/interpreter'
+    ];
+    let data = null;
+    for (const endpoint of endpoints) {
+        try {
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                body: 'data=' + encodeURIComponent(query),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            });
+            if (!res.ok) continue;
+            const json = await res.json();
+            if (!json.elements || !json.elements.length) continue;
+            data = json;
+            break;
+        } catch (e) { /* tenta o próximo servidor */ }
+    }
+    if (!data) return [];
+    const seen = new Set();
+    const all = data.elements.filter(el => el.tags && el.tags.name);
+    const preferred = all.filter(el => publicRe.test(el.tags.name));
+    return (preferred.length ? preferred : all).map(el => {
+        const lat = el.lat ?? el.center?.lat;
+        const lng = el.lon ?? el.center?.lon;
+        const t = el.tags || {};
+        const street = [t['addr:street'], t['addr:housenumber']].filter(Boolean).join(', ');
+        return {
+            name: t.name || 'Unidade de saúde',
+            address: [street, t['addr:suburb'] || t['addr:city']].filter(Boolean).join(' - ') || 'Endereço não informado',
+            phone: t.phone || t['contact:phone'] || '',
+            lat, lng,
+            distance: lat == null ? Infinity : haversineKm(center, { lat, lng })
+        };
+    }).filter(u => u.lat != null && !seen.has(u.name + u.lat) && seen.add(u.name + u.lat))
+        .sort((a, b) => a.distance - b.distance).slice(0, 20);
+}
+
+function renderUnitMarkers(center, units) {
+    ensureMap();
+    healthLayer.clearLayers();
+    L.circleMarker([center.lat, center.lng], { radius: 8, color: '#F59E0B', fillOpacity: 0.8 })
+        .bindPopup('Sua localização aproximada').addTo(healthLayer);
+    units.forEach(unit => {
+        const popup = document.createElement('div');
+        const strong = document.createElement('strong');
+        strong.textContent = unit.name;
+        popup.append(strong, document.createElement('br'), document.createTextNode(unit.address));
+        unit.marker = L.marker([unit.lat, unit.lng]).bindPopup(popup).addTo(healthLayer);
     });
 }
 
@@ -467,3 +589,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => { if (window.L && document.getElementById('unitsMap')) ensureMap(); });

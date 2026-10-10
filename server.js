@@ -81,11 +81,11 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"],
-            scriptSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+            scriptSrc: ["'self'", 'https://unpkg.com'],
+            styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://unpkg.com'],
             fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-            imgSrc: ["'self'", 'data:'],
-            connectSrc: ["'self'"]
+            imgSrc: ["'self'", 'data:', 'https://tile.openstreetmap.org', 'https://*.tile.openstreetmap.org', 'https://unpkg.com'],
+            connectSrc: ["'self'", 'https://viacep.com.br', 'https://nominatim.openstreetmap.org', 'https://overpass-api.de', 'https://maps.mail.ru', 'https://overpass.kumi.systems']
         }
     }
 }));
