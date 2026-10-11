@@ -55,6 +55,12 @@ O plano gratuito atual inclui 100 mil chamadas Worker por dia; D1 inclui 5 milh�
 
 O atalho **Conversar** na página inicial abre o chat com IA, rola até ele e coloca o foco no campo de mensagem. A opção **Conversar com IA** na Central de Apoio faz o mesmo; abrir novamente preserva a conversa e não fecha o chat. As respostas usam a API configurada em `API_BASE_URL`; o assistente não substitui atendimento psicológico nem o CVV.
 
+O envio ao chat exige autorização após o aviso de privacidade. O histórico permanece apenas na memória da aba; **Limpar conversa** remove a exibição local e revoga a autorização, mas não apaga registros técnicos dos provedores. O mural é público e exige autorização separada para publicar mensagens gerais, sem dados ou relatos pessoais.
+
+As opções de acessibilidade ajustam a fonte e o alto contraste e oferecem leitura em voz alta de conteúdo educativo selecionado (nunca chat ou mural), com controle de parada. A leitura usa a síntese de voz do navegador; pode não estar disponível e pode depender de um serviço externo. Fonte e contraste são salvos localmente.
+
+A biblioteca aponta para Ministério da Saúde e CVV, além dos materiais do projeto. Para localização oficial de CAPS/UBS, use a consulta externa do CNES por município. O mapa integrado continua sendo complementar, com dados colaborativos do OpenStreetMap, não oficiais. A seção **Privacidade e uso de dados** descreve serviços externos e armazenamento.
+
 Além de responder no chat, o assistente pode sugerir navegação dentro do site. A API pode retornar `action` em `POST /api/chat` com um destes valores:
 
 - `ajuda`: rola para a seção de contatos e serviços de apoio

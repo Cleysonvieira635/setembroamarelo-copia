@@ -17,7 +17,7 @@ class BackendAPI {
         const apiUrl = `${apiBaseUrl}${url}`;
         const response = await fetch(apiUrl, options);
         const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'Não foi possível concluir a solicitação.');
+        if (!response.ok) throw new Error(data.error || data.message || 'Não foi possível concluir a solicitação.');
         return data;
     }
 
@@ -127,6 +127,18 @@ async function sendChatMessage() {
     const text = input.value.trim();
 
     if (!text) return;
+    const status = document.getElementById('chatStatus');
+    if (!document.getElementById('chatConsent').checked) {
+        status.textContent = 'Leia o aviso de privacidade e autorize o envio antes de conversar com a IA.';
+        document.getElementById('chatConsent').focus();
+        return;
+    }
+    const sendButton = document.querySelector('[data-action="send-chat"]');
+    if (sendButton.disabled) return;
+    const clearButton = document.querySelector('[data-action="clear-chat"]');
+    sendButton.disabled = true;
+    clearButton.disabled = true;
+    status.textContent = 'A IA está preparando uma resposta...';
 
     // Mensagem do Usuário
     const userMsg = document.createElement('div');
@@ -148,13 +160,26 @@ async function sendChatMessage() {
         container.appendChild(botMsg);
         container.scrollTop = container.scrollHeight;
         runSiteAction(response.action);
+        status.textContent = 'Resposta recebida. Para apoio humano, ligue 188.';
     } catch (error) {
         const botMsg = document.createElement('div');
         botMsg.className = 'message msg-bot';
         botMsg.textContent = `${error.message} Se precisar, ligue 188 (CVV).`;
         container.appendChild(botMsg);
         container.scrollTop = container.scrollHeight;
+        status.textContent = 'Não foi possível obter uma resposta da IA. Para apoio humano, ligue 188.';
+    } finally {
+        sendButton.disabled = false;
+        clearButton.disabled = false;
     }
+}
+
+function clearChat() {
+    if (document.querySelector('[data-action="clear-chat"]').disabled) return;
+    document.getElementById('chatMessages').replaceChildren();
+    document.getElementById('chatInput').value = '';
+    document.getElementById('chatConsent').checked = false;
+    document.getElementById('chatStatus').textContent = 'Conversa removida desta aba. Isso não apaga eventuais registros dos provedores.';
 }
 
 // Exercício de Respiração Guiada (4-4-4)
@@ -251,6 +276,8 @@ async function searchHealthUnits() {
         }
     } catch (error) {
         console.warn('Busca no mapa falhou:', error);
+        list.textContent = 'A busca complementar está indisponível. Consulte o CNES ou a Secretaria Municipal de Saúde para localizar CAPS e UBS.';
+        return;
     } finally {
         searchHealthUnits.running = false;
         if (button) { button.disabled = false; button.textContent = originalLabel; }
@@ -275,6 +302,9 @@ async function searchHealthUnits() {
         const address = document.createElement('p');
         address.textContent = `📍 ${unit.address} · ${unit.distance.toFixed(1)} km`;
         div.append(name, address);
+        const source = document.createElement('small');
+        source.textContent = 'Fonte: OpenStreetMap (colaborativa). Confirme no CNES e com a unidade.';
+        div.appendChild(source);
         if (unit.phone) {
             const phone = document.createElement('p');
             phone.textContent = `📞 ${unit.phone}`;
@@ -425,10 +455,16 @@ async function publishWallMessage() {
         alert("Escreva uma mensagem antes de publicar.");
         return;
     }
+    if (!document.getElementById('wallConsent').checked) {
+        alert('Autorize a publicação e envie apenas uma mensagem geral, sem dados ou relatos pessoais.');
+        document.getElementById('wallConsent').focus();
+        return;
+    }
 
     try {
         await api.postWallMessage(text);
         input.value = "";
+        document.getElementById('wallConsent').checked = false;
         renderWall();
     } catch (error) {
         alert(error.message);
@@ -570,6 +606,9 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'send-chat':
                 sendChatMessage();
                 break;
+            case 'clear-chat':
+                clearChat();
+                break;
             case 'toggle-breathing':
                 toggleBreathing();
                 break;
@@ -636,10 +675,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const load = (k, d) => { try { return localStorage.getItem(k) ?? d; } catch (e) { return d; } };
     const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* opcional */ } };
-    let zoom = Number(load('a11y-zoom', '1'));
+    const savedZoom = Number(load('a11y-zoom', '1'));
+    let zoom = Number.isFinite(savedZoom) ? Math.min(1.5, Math.max(0.9, savedZoom)) : 1;
     let contrast = load('a11y-contrast', '0') === '1';
     const apply = () => {
-        body.style.zoom = zoom;
+        document.documentElement.style.fontSize = `${zoom * 100}%`;
         body.classList.toggle('high-contrast', contrast);
         cbtn.setAttribute('aria-pressed', String(contrast));
     };
@@ -655,6 +695,83 @@ document.addEventListener('DOMContentLoaded', () => {
     const minus = mk('A-', 'Diminuir texto');
     const plus = mk('A+', 'Aumentar texto');
     const cbtn = mk('◐', 'Alto contraste');
+    const readingSelect = document.createElement('select');
+    readingSelect.setAttribute('aria-label', 'Conteúdo para leitura em voz alta');
+    for (const [value, text] of [['home', 'Início'], ['sinais', 'Sinais e orientações'], ['materiais', 'Biblioteca'], ['privacidade', 'Privacidade']]) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = text;
+        readingSelect.appendChild(option);
+    }
+    bar.appendChild(readingSelect);
+    const reader = mk('Ouvir', 'Ler conteúdo educativo em voz alta');
+    reader.setAttribute('aria-pressed', 'false');
+    const readingStatus = document.createElement('span');
+    readingStatus.className = 'reading-status';
+    readingStatus.setAttribute('role', 'status');
+    bar.appendChild(readingStatus);
+    let reading = false;
+    let currentUtterance = null;
+    const stopReading = () => {
+        reading = false;
+        if (currentUtterance) {
+            currentUtterance.onend = null;
+            currentUtterance.onerror = null;
+            currentUtterance = null;
+        }
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        reader.textContent = 'Ouvir';
+        reader.setAttribute('aria-pressed', 'false');
+        reader.setAttribute('aria-label', 'Ler conteúdo educativo em voz alta');
+    };
+    reader.addEventListener('click', () => {
+        if (reading) {
+            stopReading();
+            readingStatus.textContent = 'Leitura interrompida.';
+            return;
+        }
+        if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
+            readingStatus.textContent = 'Leitura em voz alta indisponível neste navegador.';
+            return;
+        }
+        const section = document.getElementById(readingSelect.value);
+        const text = Array.from(section.querySelectorAll('h1, h2, h3, h4, p, li'))
+            .filter(element => !element.closest('.tab-content:not(.active)') && element.getClientRects().length)
+            .map(element => element.textContent.trim()).join('. ');
+        const chunks = text.match(/[\s\S]{1,220}(?:\s|$)|[\s\S]{1,220}/g) || [];
+        if (!chunks.length) {
+            readingStatus.textContent = 'Não há conteúdo educativo disponível para leitura.';
+            return;
+        }
+        reading = true;
+        reader.textContent = 'Parar';
+        reader.setAttribute('aria-pressed', 'true');
+        reader.setAttribute('aria-label', 'Parar leitura em voz alta');
+        readingStatus.textContent = 'Lendo conteúdo educativo.';
+        const speakNext = () => {
+            if (!reading) return;
+            const chunk = chunks.shift();
+            if (!chunk) {
+                stopReading();
+                readingStatus.textContent = 'Leitura concluída.';
+                return;
+            }
+            currentUtterance = new SpeechSynthesisUtterance(chunk);
+            currentUtterance.lang = 'pt-BR';
+            currentUtterance.onend = speakNext;
+            currentUtterance.onerror = () => {
+                stopReading();
+                readingStatus.textContent = 'Não foi possível reproduzir a leitura. Verifique as vozes do navegador.';
+            };
+            window.speechSynthesis.speak(currentUtterance);
+        };
+        speakNext();
+    });
+    readingSelect.addEventListener('change', () => {
+        stopReading();
+        readingStatus.textContent = '';
+    });
+    window.addEventListener('pagehide', stopReading);
     minus.addEventListener('click', () => { zoom = Math.max(0.9, +(zoom - 0.1).toFixed(1)); save('a11y-zoom', zoom); apply(); });
     plus.addEventListener('click', () => { zoom = Math.min(1.5, +(zoom + 0.1).toFixed(1)); save('a11y-zoom', zoom); apply(); });
     cbtn.addEventListener('click', () => { contrast = !contrast; save('a11y-contrast', contrast ? '1' : '0'); apply(); });

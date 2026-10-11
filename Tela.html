@@ -27,8 +27,8 @@
                     <li><a href="#home" class="nav-link active">Início</a></li>
                     <li><a href="#ajuda" class="nav-link">Preciso de Ajuda</a></li>
                     <li><a href="#sinais" class="nav-link">Sinais & Guias</a></li>
-                    <li><a href="#comunidade" class="nav-link">Histórias & Mural</a></li>
-                    <li><a href="#materiais" class="nav-link">Materiais</a></li>
+                    <li><a href="#comunidade" class="nav-link">Acolhimento & Mural</a></li>
+                    <li><a href="#materiais" class="nav-link">Biblioteca</a></li>
                 </ul>
             </nav>
             <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Abrir menu de navegação" aria-controls="navMenu" aria-expanded="false">
@@ -129,15 +129,20 @@
                     </div>
                     <button type="button" data-action="toggle-chat" aria-label="Fechar chat com IA" style="background:none; border:none; color:white; cursor:pointer; font-size:1.2rem;">✕</button>
                 </div>
-                <div class="chat-sim-messages" id="chatMessages">
+                <p class="privacy-notice">As mensagens são enviadas ao serviço de IA da Cloudflare. Não informe nome completo, telefone, endereço ou outros dados pessoais. Esta conversa não é publicada no mural. <a href="#privacidade">Saiba como seus dados são tratados</a>.</p>
+                <label class="consent-label"><input type="checkbox" id="chatConsent"> Entendi e autorizo o envio das minhas mensagens ao serviço de IA.</label>
+                <div class="chat-sim-messages" id="chatMessages" role="log" aria-label="Conversa com IA" aria-live="polite">
                     <div class="message msg-bot">
                         Olá. Seja bem-vindo(a) ao canal de acolhimento. Estou aqui para te ouvir. Como você está se sentindo hoje?
                     </div>
                 </div>
                 <div class="chat-sim-input">
-                    <input type="text" id="chatInput" aria-label="Mensagem para a IA" placeholder="Digite sua mensagem aqui...">
+                    <input type="text" id="chatInput" maxlength="2000" aria-label="Mensagem para a IA" placeholder="Digite sua mensagem aqui...">
                     <button class="btn btn-primary btn-sm" data-action="send-chat">Enviar</button>
                 </div>
+                <p id="chatStatus" class="feature-status" role="status"></p>
+                <button type="button" class="btn btn-outline btn-sm" data-action="clear-chat">Limpar conversa deste navegador</button>
+                <p class="privacy-notice">Para apoio humano, <a href="tel:188">ligue 188 (CVV)</a>. Em risco imediato, <a href="tel:192">ligue 192 (SAMU)</a>. A IA não faz diagnósticos nem substitui profissionais.</p>
             </div>
 
             <div class="grid grid-2">
@@ -162,11 +167,12 @@
                 <div class="card">
                     <span class="card-tag">Recursos Públicos do SUS</span>
                     <h3 class="card-title">Encontre Atendimento Gratuito</h3>
-                    <p class="card-desc">Digite seu CEP ou cidade para localizar Centros de Atenção Psicossocial (CAPS) e Unidades Básicas de Saúde (UBS).</p>
+                    <p class="card-desc">Consulte CAPS e UBS no <a href="https://cnes.datasus.gov.br/" target="_blank" rel="noopener noreferrer">Cadastro Nacional de Estabelecimentos de Saúde (CNES / Ministério da Saúde)</a>. Use a consulta de estabelecimentos, filtre seu município e confirme o serviço e os horários com a Secretaria Municipal de Saúde.</p>
+                    <p class="privacy-notice">O mapa abaixo é uma busca complementar do OpenStreetMap, uma fonte colaborativa, não um cadastro oficial. Dados podem estar incompletos ou desatualizados. Seu CEP ou cidade é enviado a serviços de mapas; não digite seu endereço residencial completo.</p>
 
                     <div class="search-box">
-                        <input type="text" id="cepInput" placeholder="Digite seu CEP ou Cidade (Ex: 01001-000)">
-                        <button class="btn btn-primary" data-action="search-units">Buscar</button>
+                        <input type="text" id="cepInput" aria-label="CEP ou cidade para busca complementar no mapa" placeholder="Digite seu CEP ou Cidade (Ex: 01001-000)">
+                        <button class="btn btn-primary" data-action="search-units">Buscar no mapa</button>
                     </div>
 
                     <div class="map-placeholder" id="unitsMap" aria-label="Mapa interativo de unidades de saúde">
@@ -322,43 +328,44 @@
     <section id="comunidade" class="section bg-light">
         <div class="container">
             <div class="section-title">
-                <h2>Histórias & Mural Comunitário</h2>
-                <p>Veja relatos reais de superação e deixe uma mensagem anônima de incentivo para acolher alguém que precisa.</p>
+                <h2>Acolhimento & Mural Comunitário</h2>
+                <p>Orientações educativas e mensagens de incentivo. Não publique histórias pessoais ou informações que identifiquem você ou outra pessoa.</p>
             </div>
 
             <!-- Galeria de Histórias -->
-            <h3 style="margin-bottom: 20px;">Relatos de Superação</h3>
+            <h3 style="margin-bottom: 20px;">Caminhos de acolhimento</h3>
             <div class="grid grid-3" style="margin-bottom: 48px;">
                 <div class="card">
-                    <span class="card-tag">Depoimento • Mariana, 28 anos</span>
+                    <span class="card-tag">Orientação educativa</span>
                     <h4 class="card-title">"Descobri que pedir ajuda não é sinal de fraqueza."</h4>
-                    <p class="card-desc">"Durante a faculdade, cheguei a um ponto em que não conseguia sair da cama. Ligar para o 188 no meio da noite foi o ponto de virada para buscar o CAPS do meu bairro."</p>
+                    <p class="card-desc">Converse com alguém de confiança. A UBS pode orientar a busca por cuidado em saúde mental; o CVV atende pelo 188 para apoio emocional.</p>
                 </div>
 
                 <div class="card">
-                    <span class="card-tag">Depoimento • Carlos, 42 anos</span>
-                    <h4 class="card-title">"O apoio da minha família salvou minha vida."</h4>
-                    <p class="card-desc">"Quando meu irmão percebeu meu isolamento e apenas se sentou ao meu lado sem me julgar, entendi que não estava sozinho. O tratamento mudou minha história."</p>
+                    <span class="card-tag">Orientação educativa</span>
+                    <h4 class="card-title">Escutar sem julgar é uma forma de apoiar.</h4>
+                    <p class="card-desc">Acolha os sentimentos, evite comparações e incentive a procura por ajuda profissional. Você não precisa encontrar todas as respostas.</p>
                 </div>
 
                 <div class="card">
-                    <span class="card-tag">Depoimento • Lucas, 19 anos</span>
+                    <span class="card-tag">Orientação educativa</span>
                     <h4 class="card-title">"A ansiedade não define quem eu sou."</h4>
-                    <p class="card-desc">"Os exercícios de respiração e a terapia comunitária me ensinaram a lidar com as crises de pânico. Hoje ajudo outros jovens no meu bairro."</p>
+                    <p class="card-desc">Buscar atendimento profissional pode ajudar a compreender o que você sente. Exercícios de autocuidado não substituem avaliação e tratamento.</p>
                 </div>
             </div>
 
             <!-- Mural Interativo de Mensagens -->
             <div class="card">
                 <h3 class="card-title">Mural de Mensagens Positivas</h3>
-                <p class="card-desc">Escreva uma palavra de carinho, esperança ou incentivo. As mensagens são totalmente anônimas.</p>
+                <p class="card-desc">Escreva apenas uma mensagem geral de incentivo, sem relatos pessoais ou dados identificáveis. O mural é público; anonimato não é garantia de sigilo.</p>
 
                 <div class="wall-form">
                     <textarea id="wallMessageInput" placeholder="Escreva uma mensagem de esperança e acolhimento para alguém que está lendo..." maxlength="250"></textarea>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <small style="color: var(--text-light)">Sua mensagem será publicada anonimamente.</small>
+                        <small style="color: var(--text-light)">A mensagem aprovada será visível a todos.</small>
                         <button class="btn btn-primary" data-action="publish-message">Publicar no Mural</button>
                     </div>
+                    <label class="consent-label"><input type="checkbox" id="wallConsent"> Autorizo a publicação desta mensagem geral, sem dados ou relatos pessoais. <a href="#privacidade">Política de dados</a>.</label>
                 </div>
 
                 <div class="wall-grid" id="wallGrid">
@@ -372,8 +379,26 @@
     <section id="materiais" class="section">
         <div class="container">
             <div class="section-title">
-                <h2>Materiais para Divulgação</h2>
+                <h2>Biblioteca educativa</h2>
                 <p>Baixe cartazes, panfletos e artes para redes sociais. Leve a campanha de valorização da vida para sua escola, empresa ou comunidade.</p>
+            </div>
+
+            <div class="grid grid-3 educational-sources">
+                <article class="card">
+                    <h3 class="card-title">Saúde mental e cuidado no SUS</h3>
+                    <p class="card-desc">Informação oficial sobre saúde mental e a rede de cuidado.</p>
+                    <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/s/saude-mental" target="_blank" rel="noopener noreferrer">Ministério da Saúde</a>
+                </article>
+                <article class="card">
+                    <h3 class="card-title">Apoio humano e escuta</h3>
+                    <p class="card-desc">Conheça os canais do CVV e as formas de conversar com um voluntário.</p>
+                    <a href="https://cvv.org.br/" target="_blank" rel="noopener noreferrer">Canais oficiais do CVV</a>
+                </article>
+                <article class="card">
+                    <h3 class="card-title">Vídeo da campanha</h3>
+                    <p class="card-desc">Assista ao material de divulgação do projeto. É conteúdo educativo, não orientação clínica.</p>
+                    <a href="#campanha">Assistir ao vídeo</a>
+                </article>
             </div>
 
             <div class="grid grid-3">
@@ -423,6 +448,21 @@
     </section>
 
     <!-- FOOTER -->
+    <section id="privacidade" class="section bg-light" aria-labelledby="privacyTitle">
+        <div class="container">
+            <h2 id="privacyTitle">Privacidade e uso de dados</h2>
+            <p class="privacy-notice">Atualizada em 10 de outubro de 2026. Esta plataforma é informativa e não é um serviço clínico ou de emergência.</p>
+            <ul class="check-list">
+                <li><strong>Chat:</strong> ao autorizar e enviar, sua mensagem é processada pela API hospedada na Cloudflare e pelo serviço de IA configurado. O código do projeto não grava a conversa no banco nem a publica no mural. Ela fica na memória desta aba até recarregar ou limpar. Isso não garante que o provedor não mantenha registros técnicos.</li>
+                <li><strong>Limpar conversa:</strong> remove as mensagens exibidas neste navegador; não apaga registros eventualmente mantidos pelos provedores. Não informe dados pessoais ou de saúde que você não queira compartilhar com o serviço.</li>
+                <li><strong>Mural:</strong> mensagens gerais aprovadas, curtidas e uma indicação de tempo ficam no banco e são públicas pela interface e pela API. Não envie relatos pessoais, nomes, contatos ou dados de terceiros. A moderação automática pode falhar; não é garantia de anonimato.</li>
+                <li><strong>Mapas:</strong> CEP/cidade e localização aproximada são enviados a ViaCEP, Nominatim e Overpass; o OpenStreetMap recebe pedidos de mapas. Resultados ficam em cache de sessão. A consulta oficial do CNES abre um serviço externo com política própria.</li>
+                <li><strong>Acessibilidade:</strong> fonte e contraste ficam salvos neste navegador. A leitura em voz alta inclui apenas conteúdo educativo, nunca chat ou mural; a síntese de voz pode usar serviços do navegador ou do sistema.</li>
+                <li><strong>Serviços externos:</strong> GitHub Pages, Cloudflare, fontes e mapas podem tratar IP e registros técnicos segundo suas próprias políticas. Não prometemos sigilo absoluto. Não há conta de usuário nem envio automático do conteúdo dos campos pelo código do site.</li>
+            </ul>
+            <p>Consulte as políticas de <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Cloudflare</a>, <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">GitHub</a> e <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>. Para dúvidas ou solicitações sobre dados do mural, <a href="https://github.com/setembroamarelo/setembroamarelo.github.io/issues" target="_blank" rel="noopener noreferrer">contate a equipe pelo repositório</a>, sem incluir dados sensíveis em uma solicitação pública.</p>
+        </div>
+    </section>
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -442,6 +482,8 @@
                         <li><a href="#ajuda">Buscar Ajuda</a></li>
                         <li><a href="#sinais">Sinais de Alerta</a></li>
                         <li><a href="#comunidade">Mural da Comunidade</a></li>
+                        <li><a href="#materiais">Biblioteca educativa</a></li>
+                        <li><a href="#privacidade">Privacidade e dados</a></li>
                     </ul>
                 </div>
                 <div>

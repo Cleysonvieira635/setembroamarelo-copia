@@ -362,8 +362,9 @@ body {
     gap: 28px;
 }
 
-.grid-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid > * { min-width: 0; overflow-wrap: anywhere; }
 
 /* --- TELA "PRECISO DE AJUDA" --- */
 .cvv-banner {
@@ -449,6 +450,7 @@ body {
     padding: 12px 16px;
     border-radius: 12px;
     font-size: 0.95rem;
+    overflow-wrap: anywhere;
 }
 
 .msg-bot {
@@ -476,6 +478,7 @@ body {
 
 .chat-sim-input input {
     flex: 1;
+    min-width: 0;
     padding: 10px 16px;
     border: 1px solid var(--border);
     border-radius: 99px;
@@ -539,6 +542,7 @@ body {
 
 .search-box input {
     flex: 1;
+    min-width: 0;
     padding: 10px 16px;
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -982,7 +986,9 @@ body {
     .hero-content { grid-row: 2; }
     .hero-shortcuts { margin-top: 20px; }
     .header-cta { display: none; }
-    .grid-2, .grid-3, .footer-grid, .wall-grid { grid-template-columns: 1fr; }
+    .grid-2, .grid-3, .footer-grid, .wall-grid { grid-template-columns: minmax(0, 1fr); }
+    .search-box { flex-direction: column; }
+    .breathing-widget .btn { max-width: 100%; white-space: normal; }
     .cvv-banner { flex-direction: column; text-align: center; gap: 24px; }
     .cvv-meta { flex-direction: column; gap: 8px; }
 }
@@ -1003,6 +1009,19 @@ body {
 .a11y-bar{position:fixed;left:12px;bottom:12px;z-index:9999;display:flex;gap:6px;background:#fff;border:2px solid #4F46E5;border-radius:12px;padding:6px;box-shadow:0 4px 14px rgba(0,0,0,.2)}
 .a11y-bar button{font:inherit;font-weight:700;min-width:40px;min-height:40px;border:1px solid #4F46E5;background:#fff;color:#4F46E5;border-radius:8px;cursor:pointer}
 .a11y-bar button[aria-pressed="true"]{background:#4F46E5;color:#fff}
+.a11y-bar{flex-wrap:wrap;max-width:calc(100vw - 24px)}
+.a11y-bar select{max-width:150px;min-height:40px;font:inherit;border:1px solid var(--border);border-radius:8px}
+.reading-status{flex-basis:100%;font-size:.75rem;color:var(--text-muted)}
+.reading-status:empty{display:none}
+.privacy-notice,.feature-status{font-size:.875rem;padding:12px;overflow-wrap:anywhere}
+.consent-label{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px;font-size:.875rem}
+.consent-label input{width:20px;height:20px;flex-shrink:0}
+.educational-sources{margin-bottom:28px}
+button:disabled{cursor:wait;opacity:.7}
+body.high-contrast .hero-section{background:#fff}
+body.high-contrast .hero-title span{background:none;color:#000;-webkit-text-fill-color:#000}
+body.high-contrast .hero-shortcut,body.high-contrast .hero-badge{background:#fff;color:#000;border:2px solid #000}
+body.high-contrast .chat-sim-header small{color:#fff!important}
 body.high-contrast{--primary:#1E1B8F;--primary-hover:#14126B;--text-muted:#111827;--text-light:#111827;--border:#111827;--bg-light:#fff;background:#fff;color:#000}
 body.high-contrast a:not(.btn){color:#00008B;text-decoration:underline}
 body.high-contrast .card,body.high-contrast .hero-card{border:2px solid #000}
