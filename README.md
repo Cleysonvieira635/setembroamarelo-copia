@@ -59,6 +59,8 @@ O envio ao chat exige autorização após o aviso de privacidade. O histórico p
 
 As opções de acessibilidade ajustam a fonte e o alto contraste e oferecem leitura em voz alta de conteúdo educativo selecionado (nunca chat ou mural), com controle de parada. A leitura usa a síntese de voz do navegador; pode não estar disponível e pode depender de um serviço externo. Fonte e contraste são salvos localmente.
 
+O botão flutuante **Acessibilidade**, no canto inferior esquerdo, abre essas opções. O painel fecha ao clicar novamente, fora dele ou pressionar Escape; Escape devolve o foco ao botão. Fechar o painel não altera as preferências nem interrompe a leitura.
+
 A biblioteca aponta para Ministério da Saúde e CVV, além dos materiais do projeto. Para localização oficial de CAPS/UBS, use a consulta externa do CNES por município. O mapa integrado continua sendo complementar, com dados colaborativos do OpenStreetMap, não oficiais. A seção **Privacidade e uso de dados** descreve serviços externos e armazenamento.
 
 Além de responder no chat, o assistente pode sugerir navegação dentro do site. A API pode retornar `action` em `POST /api/chat` com um destes valores:

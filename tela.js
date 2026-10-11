@@ -685,8 +685,38 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const bar = document.createElement('div');
     bar.className = 'a11y-bar';
+    bar.id = 'accessibilityOptions';
+    bar.hidden = true;
     bar.setAttribute('role', 'group');
     bar.setAttribute('aria-label', 'Opções de acessibilidade');
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'a11y-toggle';
+    toggle.textContent = 'Acessibilidade';
+    toggle.setAttribute('aria-controls', bar.id);
+    toggle.setAttribute('aria-expanded', 'false');
+    const setPanelOpen = open => {
+        bar.hidden = !open;
+        toggle.setAttribute('aria-expanded', String(open));
+    };
+    toggle.addEventListener('click', () => {
+        const open = bar.hidden;
+        setPanelOpen(open);
+        if (open) minus.focus();
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !bar.hidden) {
+            setPanelOpen(false);
+            toggle.focus();
+        }
+    });
+    document.addEventListener('click', event => {
+        if (!bar.hidden && !bar.contains(event.target) && !toggle.contains(event.target)) {
+            const restoreFocus = bar.contains(document.activeElement);
+            setPanelOpen(false);
+            if (restoreFocus) toggle.focus();
+        }
+    });
     const mk = (txt, label) => {
         const b = document.createElement('button');
         b.type = 'button'; b.textContent = txt; b.setAttribute('aria-label', label); b.title = label;
@@ -776,6 +806,7 @@ document.addEventListener('DOMContentLoaded', () => {
     plus.addEventListener('click', () => { zoom = Math.min(1.5, +(zoom + 0.1).toFixed(1)); save('a11y-zoom', zoom); apply(); });
     cbtn.addEventListener('click', () => { contrast = !contrast; save('a11y-contrast', contrast ? '1' : '0'); apply(); });
     body.appendChild(bar);
+    body.appendChild(toggle);
     const skip = document.createElement('a');
     skip.href = '#home'; skip.className = 'skip-link'; skip.textContent = 'Pular para o conteúdo';
     body.insertBefore(skip, body.firstChild);
