@@ -90,6 +90,13 @@ function toggleChatSimulator() {
     chat.style.display = chat.style.display === 'none' ? 'block' : 'none';
 }
 
+function openChatSimulator() {
+    const chat = document.getElementById('chatSimulator');
+    chat.style.display = 'block';
+    chat.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('chatInput').focus({ preventScroll: true });
+}
+
 const SITE_ACTION_TARGETS = {
     ajuda: 'ajuda',
     respiracao: 'breathBtn',
@@ -553,6 +560,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         switch (target.dataset.action) {
+            case 'open-chat':
+                event.preventDefault();
+                openChatSimulator();
+                break;
             case 'toggle-chat':
                 toggleChatSimulator();
                 break;

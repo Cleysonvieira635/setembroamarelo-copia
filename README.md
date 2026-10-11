@@ -53,6 +53,8 @@ O plano gratuito atual inclui 100 mil chamadas Worker por dia; D1 inclui 5 milh�
 
 ## IA guiando a navegação do site
 
+O atalho **Conversar** na página inicial abre o chat com IA, rola até ele e coloca o foco no campo de mensagem. A opção **Conversar com IA** na Central de Apoio faz o mesmo; abrir novamente preserva a conversa e não fecha o chat. As respostas usam a API configurada em `API_BASE_URL`; o assistente não substitui atendimento psicológico nem o CVV.
+
 Além de responder no chat, o assistente pode sugerir navegação dentro do site. A API pode retornar `action` em `POST /api/chat` com um destes valores:
 
 - `ajuda`: rola para a seção de contatos e serviços de apoio
